@@ -1,2 +1,11 @@
 # plato
-Non-built-in Platonic solids for OpenSCAD: regular tetrahedron (4 faces), octahedron (8 faces), dodecahedron (12 faces) and icosahedron (20 faces). (Only the regular hexahedron (cube, 6 faces) is built in.)
+
+The non-built-in [Platonic solids](http://en.wikipedia.org/wiki/Platonic_solid) for OpenSCAD:
+* regular tetrahedron (4 faces)
+* regular octahedron (8 faces)
+* regular dodecahedron (12 faces)
+* regular icosahedron (20 faces)
+
+## Screenshot
+
+![screenshot](plato.png)
