@@ -1,25 +1,22 @@
-// The four non-built-in Platonic solids for OpenSCAD (regular tetrahedron,
-// octahedron, dodecahedron and icosahedron).
-// By Kalle (http://qalle.net).
+// The non-built-in Platonic solids.
+// See the readme file for the math.
 
 module tetrahedron() {
     // regular tetrahedron (centered at origin, edge length 1)
-    // http://en.wikipedia.org/wiki/Equilateral_triangle
-    // http://en.wikipedia.org/wiki/Tetrahedron#Regular_tetrahedron
 
-    a = 1 / 2;         // edge length / 2
-    b = sqrt(3) / 6;   // radius of incircle of faces
-    c = sqrt(3) / 3;   // radius of circumcircle of faces
-    d = sqrt(6) / 12;  // radius of insphere
-    e = sqrt(6) / 4;   // radius of circumsphere
+    he = 1 / 2;        // half the edge length
+    fi = sqrt(3) / 6;  // faces - incircle radius
+    fc = sqrt(3) / 3;  // faces - circumcircle radius
+    i = sqrt(6) / 12;  // insphere radius
+    c = sqrt(6) / 4;   // circumsphere radius
 
     polyhedron(
         // vertices
         [
-            [ 0,  0,  e],  // 0: top
-            [ 0,  c, -d],  // 1: bottom front
-            [-a, -b, -d],  // 2: bottom rear left
-            [ a, -b, -d],  // 3: bottom rear right
+            [  0,   0,  c],  // 0: top
+            [  0,  fc, -i],  // 1: bottom front
+            [-he, -fi, -i],  // 2: bottom rear left
+            [ he, -fi, -i],  // 3: bottom rear right
         ],
         // faces
         [
@@ -33,20 +30,19 @@ module tetrahedron() {
 
 module octahedron() {
     // regular octahedron (centered at origin, edge length 1)
-    // http://en.wikipedia.org/wiki/Octahedron#Regular_octahedron
 
-    a = 1 / 2;        // edge length / 2
-    b = sqrt(2) / 2;  // radius of circumsphere
+    he = 1 / 2;       // half the edge length
+    c = sqrt(2) / 2;  // circumsphere radius
 
     polyhedron(
         // vertices
         [
-            [ 0,  0,  b],  // 0: top
-            [-a,  a,  0],  // 1: front left
-            [ a,  a,  0],  // 2: front right
-            [ a, -a,  0],  // 3: rear right
-            [-a, -a,  0],  // 4: rear left
-            [ 0,  0, -b],  // 5: bottom
+            [  0,   0,  c],  // 0: top
+            [-he,  he,  0],  // 1: front left
+            [ he,  he,  0],  // 2: front right
+            [ he, -he,  0],  // 3: rear right
+            [-he, -he,  0],  // 4: rear left
+            [  0,   0, -c],  // 5: bottom
         ],
         // faces
         [
@@ -64,45 +60,37 @@ module octahedron() {
 
 module dodecahedron() {
     // regular dodecahedron (centered at origin, edge length 1)
-    // http://en.wikipedia.org/wiki/Regular_dodecahedron
-    //
-    // phi = (1 + sqrt(5)) / 2
-    // phi^2 = phi + 1
-    //
-    // if edge = 2/phi, coordinates of vertices are:
-    //     (+-1, +-1, +-1)
-    //     circular permutations of (0, +-phi, +-1/phi)
-    // to get coordinates with edge length 1, multiply them by phi/2:
-    //     (+-phi/2, +-phi/2, +-phi/2)
-    //     circular permutations of (0, +-(phi+1)/2, +-1/2)
 
-    a = (1 + sqrt(5)) / 4;  // phi / 2
-    b = (3 + sqrt(5)) / 4;  // (phi + 1) / 2
-    c = 1 / 2;
+    // coordinates of the "cube"
+    c = (1 + sqrt(5)) / 4;  // phi / 2
+    // coordinates of the "rectangular cuboid"
+    r1 = 0;
+    r2 = (3 + sqrt(5)) / 4;  // (phi + 1) / 2
+    r3 = 1 / 2;
 
     polyhedron(
         // vertices
         [
-            [ 0,  b,  c],  //  0: front top
-            [ 0,  b, -c],  //  1: front bottom
-            [ 0, -b,  c],  //  2: rear top
-            [ 0, -b, -c],  //  3: rear bottom
-            [ c,  0,  b],  //  4: top right
-            [ c,  0, -b],  //  5: bottom right
-            [-c,  0,  b],  //  6: top left
-            [-c,  0, -b],  //  7: bottom left
-            [ a,  a,  a],  //  8: top front right
-            [ a,  a, -a],  //  9: bottom front right
-            [ a, -a,  a],  // 10: top rear right
-            [ a, -a, -a],  // 11: bottom rear right
-            [-a,  a,  a],  // 12: top front left
-            [-a,  a, -a],  // 13: bottom front left
-            [-a, -a,  a],  // 14: top rear left
-            [-a, -a, -a],  // 15: bottom rear left
-            [ b,  c,  0],  // 16: right front
-            [ b, -c,  0],  // 17: right rear
-            [-b,  c,  0],  // 18: left front
-            [-b, -c,  0],  // 19: left rear
+            [ r1,  r2,  r3],  //  0: front top
+            [ r1,  r2, -r3],  //  1: front bottom
+            [ r1, -r2,  r3],  //  2: rear top
+            [ r1, -r2, -r3],  //  3: rear bottom
+            [ r3,  r1,  r2],  //  4: top right
+            [ r3,  r1, -r2],  //  5: bottom right
+            [-r3,  r1,  r2],  //  6: top left
+            [-r3,  r1, -r2],  //  7: bottom left
+            [  c,   c,   c],  //  8: top front right
+            [  c,   c,  -c],  //  9: bottom front right
+            [  c,  -c,   c],  // 10: top rear right
+            [  c,  -c,  -c],  // 11: bottom rear right
+            [ -c,   c,   c],  // 12: top front left
+            [ -c,   c,  -c],  // 13: bottom front left
+            [ -c,  -c,   c],  // 14: top rear left
+            [ -c,  -c,  -c],  // 15: bottom rear left
+            [ r2,  r3,  r1],  // 16: right front
+            [ r2, -r3,  r1],  // 17: right rear
+            [-r2,  r3,  r1],  // 18: left front
+            [-r2, -r3,  r1],  // 19: left rear
         ],
         // faces
         [
@@ -124,29 +112,26 @@ module dodecahedron() {
 
 module icosahedron() {
     // regular icosahedron (centered at origin, edge length 1)
-    // http://en.wikipedia.org/wiki/Regular_icosahedron
 
-    // coordinates of vertices:
-    //     circular permutations of 0, +-1/2, +-phi/2
-
-    a = 1 / 2;
-    b = (1 + sqrt(5)) / 4;  // phi/2
+    c1 = 0;                  // coordinate 1
+    c2 = 1 / 2;              // coordinate 2
+    c3 = (1 + sqrt(5)) / 4;  // coordinate 3; phi / 2
 
     polyhedron(
         // vertices
         [
-            [ b,  0,  a],  //  0: right top
-            [ b,  0, -a],  //  1: right bottom
-            [-b,  0,  a],  //  2: left top
-            [-b,  0, -a],  //  3: left bottom
-            [ a,  b,  0],  //  4: front right
-            [ a, -b,  0],  //  5: rear right
-            [-a,  b,  0],  //  6: front left
-            [-a, -b,  0],  //  7: rear left
-            [ 0,  a,  b],  //  8: top front
-            [ 0,  a, -b],  //  9: bottom front
-            [ 0, -a,  b],  // 10: top rear
-            [ 0, -a, -b],  // 11: bottom rear
+            [ c3,  c1,  c2],  //  0: right top
+            [ c3,  c1, -c2],  //  1: right bottom
+            [-c3,  c1,  c2],  //  2: left top
+            [-c3,  c1, -c2],  //  3: left bottom
+            [ c2,  c3,  c1],  //  4: front right
+            [ c2, -c3,  c1],  //  5: rear right
+            [-c2,  c3,  c1],  //  6: front left
+            [-c2, -c3,  c1],  //  7: rear left
+            [ c1,  c2,  c3],  //  8: top front
+            [ c1,  c2, -c3],  //  9: bottom front
+            [ c1, -c2,  c3],  // 10: top rear
+            [ c1, -c2, -c3],  // 11: bottom rear
         ],
         // faces
         [
